@@ -27,6 +27,8 @@
 #include "Track.H"
 
 #include <FL/fl_ask.h>
+#include <cstdio>
+#include <cstdlib>
 
 //****************************************************************************
 //

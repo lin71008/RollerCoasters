@@ -29,8 +29,7 @@
 
 // we will need OpenGL, and OpenGL needs windows.h
 #include <windows.h>
-//#include "GL/gl.h"
-#include <glad/glad.h>
+#include "GL/gl.h"
 #include <glm/glm.hpp>
 #include "GL/glu.h"
 
@@ -184,12 +183,12 @@ void TrainView::draw()
 	//
 	//**********************************************************************
 	//initialized glad
-	if (gladLoadGL())
-	{
-		//initiailize VAO, VBO, Shader...
-	}
-	else
-		throw std::runtime_error("Could not initialize GLAD!");
+	// if (gladLoadGL())
+	// {
+	// 	//initiailize VAO, VBO, Shader...
+	// }
+	// else
+	// 	throw std::runtime_error("Could not initialize GLAD!");
 
 	// Set up the view port
 	glViewport(0,0,w(),h());
@@ -260,7 +259,7 @@ void TrainView::draw()
 	// now draw the ground plane
 	//*********************************************************************
 	// set to opengl fixed pipeline(use opengl 1.x draw function)
-	glUseProgram(0);
+	// glUseProgram(0);
 
 	setupFloor();
 	glDisable(GL_LIGHTING);
