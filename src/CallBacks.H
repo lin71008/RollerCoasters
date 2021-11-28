@@ -49,12 +49,23 @@ void loadCB(Fl_Widget*, TrainWindow* tw);
 void saveCB(Fl_Widget*, TrainWindow* tw);
 
 // roll the control points
+// Move the selected control point about x axis by one more unit
+void mxpCB(Fl_Widget*, TrainWindow* tw);
+// Move the selected control point about x axis by one less unit
+void mxnCB(Fl_Widget*, TrainWindow* tw);
+// Move the selected control point about y axis by one more unit
+void mypCB(Fl_Widget*, TrainWindow* tw);
+// Move the selected control point about y axis by one less unit
+void mynCB(Fl_Widget*, TrainWindow* tw);
+// Move the selected control point about z axis by one more unit
+void mzpCB(Fl_Widget*, TrainWindow* tw);
+// Move the selected control point about z axis by one less unit
+void mznCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about x axis by one more degree
-void rpxCB(Fl_Widget*, TrainWindow* tw);
+void rxpCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about x axis by one less degree
-void rmxCB(Fl_Widget*, TrainWindow* tw);
-
+void rxnCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about the z axis one more degree
-void rpzCB(Fl_Widget*, TrainWindow* tw);
+void rzpCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about the z axis one less degree
-void rmzCB(Fl_Widget*, TrainWindow* tw);
+void rznCB(Fl_Widget*, TrainWindow* tw);

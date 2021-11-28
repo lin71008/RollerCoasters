@@ -29,11 +29,13 @@
 #pragma warning(push)
 #pragma warning(disable:4312)
 #pragma warning(disable:4311)
-#include <Fl/Fl_Double_Window.h>
+#include <Fl/Fl_Box.h>
+#include <Fl/Fl_Browser.H>
 #include <Fl/Fl_Button.h>
+#include <Fl/Fl_Dial.h>
+#include <Fl/Fl_Double_Window.h>
 #include <Fl/Fl_Group.H>
 #include <Fl/Fl_Value_Slider.H>
-#include <Fl/Fl_Browser.H>
 #pragma warning(pop)
 
 // we need to know what is in the world to show
@@ -44,9 +46,9 @@ class TrainView;
 
 // if we're also making the sample solution, then we need to know 
 // about the stuff we don't tell students
-#ifdef EXAMPLE_SOLUTION
-#include "TrainExample/TrainExample.H"
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// #include "TrainExample/TrainExample.H"
+// #endif
 
 class TrainWindow : public Fl_Double_Window {
 	public:
@@ -92,7 +94,11 @@ class TrainWindow : public Fl_Double_Window {
 
 		// we have other widgets as part of the sample solution
 		// this is not for 559 students to know about
-#ifdef EXAMPLE_SOLUTION
-	ExampleWidgets ew;
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// 	ExampleWidgets ew;
+// #endif
+
+
+
+
 };

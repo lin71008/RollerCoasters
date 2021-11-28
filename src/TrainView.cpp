@@ -37,10 +37,12 @@
 #include "TrainWindow.H"
 #include "Utilities/3DUtils.H"
 
+#include "DEBUG.h"
 
-#ifdef EXAMPLE_SOLUTION
-#	include "TrainExample/TrainExample.H"
-#endif
+
+// #ifdef EXAMPLE_SOLUTION
+// #	include "TrainExample/TrainExample.H"
+// #endif
 
 
 //************************************************************************
@@ -53,7 +55,7 @@ TrainView(int x, int y, int w, int h, const char* l)
 //========================================================================
 {
 	mode( FL_RGB|FL_ALPHA|FL_DOUBLE | FL_STENCIL );
-
+	this->selectedCube = -1;
 	resetArcball();
 }
 
@@ -150,7 +152,7 @@ int TrainView::handle(int event)
 				if (k == 'p') {
 					// Print out the selected control point information
 					if (selectedCube >= 0) 
-						printf("Selected(%d) (%g %g %g) (%g %g %g)\n",
+						DEBUG_INFO("Selected(%d) (%g %g %g) (%g %g %g)\n",
 								 selectedCube,
 								 m_pTrack->points[selectedCube].pos.x,
 								 m_pTrack->points[selectedCube].pos.y,
@@ -159,7 +161,7 @@ int TrainView::handle(int event)
 								 m_pTrack->points[selectedCube].orient.y,
 								 m_pTrack->points[selectedCube].orient.z);
 					else
-						printf("Nothing Selected\n");
+						DEBUG_INFO("Nothing Selected\n");
 
 					return 1;
 				};
@@ -238,10 +240,10 @@ void TrainView::draw()
 	GLfloat lightPosition1[]	= {0,1,1,0}; // {50, 200.0, 50, 1.0};
 	GLfloat lightPosition2[]	= {1, 0, 0, 0};
 	GLfloat lightPosition3[]	= {0, -1, 0, 0};
-	GLfloat yellowLight[]		= {0.5f, 0.5f, .1f, 1.0};
-	GLfloat whiteLight[]			= {1.0f, 1.0f, 1.0f, 1.0};
-	GLfloat blueLight[]			= {.1f,.1f,.3f,1.0};
-	GLfloat grayLight[]			= {.3f, .3f, .3f, 1.0};
+	GLfloat yellowLight[] = {0.5f, 0.5f, .1f, 1.0};
+	GLfloat whiteLight[] = {1.0f, 1.0f, 1.0f, 1.0};
+	GLfloat blueLight[] = {.1f,.1f,.3f,1.0};
+	GLfloat grayLight[] = {.3f, .3f, .3f, 1.0};
 
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition1);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteLight);
@@ -325,9 +327,9 @@ setProjection()
 	// put code for train view projection here!	
 	//####################################################################
 	else {
-#ifdef EXAMPLE_SOLUTION
-		trainCamView(this,aspect);
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// 		trainCamView(this,aspect);
+// #endif
 	}
 }
 
@@ -365,20 +367,21 @@ void TrainView::drawStuff(bool doingShadows)
 	// call your own track drawing code
 	//####################################################################
 
-#ifdef EXAMPLE_SOLUTION
-	drawTrack(this, doingShadows);
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// 	drawTrack(this, doingShadows);
+// #endif
 
 	// draw the train
 	//####################################################################
 	// TODO: 
 	//	call your own train drawing code
 	//####################################################################
-#ifdef EXAMPLE_SOLUTION
-	// don't draw the train if you're looking out the front window
-	if (!tw->trainCam->value())
-		drawTrain(this, doingShadows);
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// 	// don't draw the train if you're looking out the front window
+// 	if (!tw->trainCam->value())
+// 		drawTrain(this, doingShadows);
+// #endif
+	// DEBUG_INFO("%d\n", tw->trainCam->value());
 }
 
 // 
@@ -443,5 +446,5 @@ doPick()
 	} else // nothing hit, nothing selected
 		selectedCube = -1;
 
-	printf("Selected Cube %d\n",selectedCube);
+	DEBUG_INFO("Selected Cube %d\n",selectedCube);
 }

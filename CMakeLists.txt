@@ -23,7 +23,8 @@ add_executable(RollerCoasters
     ${SRC_DIR}TrainView.h
     ${SRC_DIR}TrainView.cpp
     ${SRC_DIR}TrainWindow.h
-    ${SRC_DIR}TrainWindow.cpp)
+    ${SRC_DIR}TrainWindow.cpp
+    ${SRC_DIR}DEBUG.h)
 
 add_library(Utilities 
     ${SRC_DIR}Utilities/3DUtils.h

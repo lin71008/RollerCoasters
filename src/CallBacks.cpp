@@ -26,6 +26,7 @@
 #include "TrainWindow.H"
 #include "TrainView.H"
 #include "CallBacks.H"
+#include "DEBUG.h"
 
 #pragma warning(push)
 #pragma warning(disable:4312)
@@ -172,15 +173,57 @@ void saveCB(Fl_Widget*, TrainWindow* tw)
 
 //***************************************************************************
 //
+// * Move the selected control point about x axis
+//===========================================================================
+void movx(TrainWindow* tw, float dir)
+{
+	int s = tw->trainView->selectedCube;
+	if (s >= 0) {
+		Pnt3f old = tw->m_Track.points[s].pos;
+		tw->m_Track.points[s].pos.x = old.x + dir;
+	}
+	tw->damageMe();
+} 
+
+//***************************************************************************
+//
+// * Move the selected control point about y axis
+//===========================================================================
+void movy(TrainWindow* tw, float dir)
+{
+	int s = tw->trainView->selectedCube;
+	if (s >= 0) {
+		Pnt3f old = tw->m_Track.points[s].pos;
+		tw->m_Track.points[s].pos.y = old.y + dir;
+	}
+	tw->damageMe();
+} 
+
+//***************************************************************************
+//
+// * Move the selected control point about z axis
+//===========================================================================
+void movz(TrainWindow* tw, float dir)
+{
+	int s = tw->trainView->selectedCube;
+	if (s >= 0) {
+		Pnt3f old = tw->m_Track.points[s].pos;
+		tw->m_Track.points[s].pos.z = old.z + dir;
+	}
+	tw->damageMe();
+} 
+
+//***************************************************************************
+//
 // * Rotate the selected control point about x axis
 //===========================================================================
-void rollx(TrainWindow* tw, float dir)
+void rotx(TrainWindow* tw, float dir)
 {
 	int s = tw->trainView->selectedCube;
 	if (s >= 0) {
 		Pnt3f old = tw->m_Track.points[s].orient;
-		float si = sin(((float)M_PI_4) * dir);
-		float co = cos(((float)M_PI_4) * dir);
+		float si = sin(((float)M_PI) * dir / 180.0);
+		float co = cos(((float)M_PI) * dir / 180.0);
 		tw->m_Track.points[s].orient.y = co * old.y - si * old.z;
 		tw->m_Track.points[s].orient.z = si * old.y + co * old.z;
 	}
@@ -189,28 +232,9 @@ void rollx(TrainWindow* tw, float dir)
 
 //***************************************************************************
 //
-// * Rotate the selected control point about x axis by one more degree
-//===========================================================================
-void rpxCB(Fl_Widget*, TrainWindow* tw)
-//===========================================================================
-{
-	rollx(tw,1);
-}
-//***************************************************************************
-//
-// * Rotate the selected control point  about x axis by less one degree
-//===========================================================================
-void rmxCB(Fl_Widget*, TrainWindow* tw)
-//===========================================================================
-{
-	rollx(tw,-1);
-}
-
-//***************************************************************************
-//
 // * Rotate the selected control point  about z axis
 //===========================================================================
-void rollz(TrainWindow* tw, float dir)
+void rotz(TrainWindow* tw, float dir)
 //===========================================================================
 {
 	int s = tw->trainView->selectedCube;
@@ -218,8 +242,8 @@ void rollz(TrainWindow* tw, float dir)
 
 		Pnt3f old = tw->m_Track.points[s].orient;
 
-		float si = sin(((float)M_PI_4) * dir);
-		float co = cos(((float)M_PI_4) * dir);
+		float si = sin(((float)M_PI) * dir / 180.0);
+		float co = cos(((float)M_PI) * dir / 180.0);
 
 		tw->m_Track.points[s].orient.y = co * old.y - si * old.x;
 		tw->m_Track.points[s].orient.x = si * old.y + co * old.x;
@@ -230,21 +254,92 @@ void rollz(TrainWindow* tw, float dir)
 
 //***************************************************************************
 //
-// * Rotate the selected control point  about the z axis one more degree
+// * Move the selected control point about x axis by one more unit
 //===========================================================================
-void rpzCB(Fl_Widget*, TrainWindow* tw)
+void mxpCB(Fl_Widget*, TrainWindow* tw)
 //===========================================================================
 {
-	rollz(tw,1);
+	movx(tw,1);
+}
+//***************************************************************************
+//
+// * Move the selected control point about x axis by one less unit
+//===========================================================================
+void mxnCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	movx(tw,-1);
+}
+//***************************************************************************
+//
+// * Move the selected control point about y axis by one more unit
+//===========================================================================
+void mypCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	movy(tw,1);
+}
+//***************************************************************************
+//
+// * Move the selected control point about y axis by one less unit
+//===========================================================================
+void mynCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	movy(tw,-1);
+}
+//***************************************************************************
+//
+// * Move the selected control point about z axis by one more unit
+//===========================================================================
+void mzpCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	movz(tw,1);
+}
+//***************************************************************************
+//
+// * Move the selected control point about z axis by one less unit
+//===========================================================================
+void mznCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	movz(tw,-1);
+}
+//***************************************************************************
+//
+// * Rotate the selected control point about x axis by one more degree
+//===========================================================================
+void rxpCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	rotx(tw,10);
+}
+//***************************************************************************
+//
+// * Rotate the selected control point  about x axis by less one degree
+//===========================================================================
+void rxnCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	rotx(tw,-10);
+}
+//***************************************************************************
+//
+// * Rotate the selected control point  about the z axis one more degree
+//===========================================================================
+void rzpCB(Fl_Widget*, TrainWindow* tw)
+//===========================================================================
+{
+	rotz(tw,10);
 }
 
 //***************************************************************************
 //
 // *  Rotate the selected control point  about the z axis one less degree
 //===========================================================================
-void rmzCB(Fl_Widget*, TrainWindow* tw)
+void rznCB(Fl_Widget*, TrainWindow* tw)
 //===========================================================================
 {
-	rollz(tw, -1);
+	rotz(tw, -10);
 }
-

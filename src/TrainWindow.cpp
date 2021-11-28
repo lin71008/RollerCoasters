@@ -27,6 +27,7 @@
 
 #include <FL/fl.h>
 #include <FL/Fl_Box.h>
+#include <FL/Fl_Dial.h>
 
 // for using the real time clock
 #include <time.h>
@@ -104,7 +105,7 @@ TrainWindow(const int x, const int y)
 
 		// browser to select spline types
 		// TODO: make sure these choices are the same as what the code supports
-		splineBrowser = new Fl_Browser(605,pty,120,75,"Spline Type");
+		splineBrowser = new Fl_Browser(605,pty,190,75,"Spline Type");
 		splineBrowser->type(2);		// select
 		splineBrowser->callback((Fl_Callback*)damageCB,this);
 		splineBrowser->add("Linear");
@@ -112,15 +113,8 @@ TrainWindow(const int x, const int y)
 		splineBrowser->add("Cubic B-Spline");
 		splineBrowser->select(2);
 
-		pty += 110;
+		pty += 105;
 
-		// add and delete points
-		Fl_Button* ap = new Fl_Button(605,pty,80,20,"Add Point");
-		ap->callback((Fl_Callback*)addPointCB,this);
-		Fl_Button* dp = new Fl_Button(690,pty,80,20,"Delete Point");
-		dp->callback((Fl_Callback*)deletePointCB,this);
-
-		pty += 25;
 		// reset the points
 		resetButton = new Fl_Button(735,pty,60,20,"Reset");
 		resetButton->callback((Fl_Callback*)resetCB,this);
@@ -129,23 +123,56 @@ TrainWindow(const int x, const int y)
 		Fl_Button* saveb = new Fl_Button(670,pty,60,20,"Save");
 		saveb->callback((Fl_Callback*) saveCB, this);
 
-		pty += 25;
+		pty += 30;
+
+		// add and delete points
+		Fl_Button* ap = new Fl_Button(605,pty,90,20,"Add Point");
+		ap->callback((Fl_Callback*)addPointCB,this);
+		Fl_Button* dp = new Fl_Button(705,pty,90,20,"Delete Point");
+		dp->callback((Fl_Callback*)deletePointCB,this);
+
+		pty += 30;
+
 		// roll the points
-		Fl_Button* rx = new Fl_Button(605,pty,30,20,"R+X");
-		rx->callback((Fl_Callback*)rpxCB,this);
-		Fl_Button* rxp = new Fl_Button(635,pty,30,20,"R-X");
-		rxp->callback((Fl_Callback*)rmxCB,this);
-		Fl_Button* rz = new Fl_Button(670,pty,30,20,"R+Z");
-		rz->callback((Fl_Callback*)rpzCB,this);
-		Fl_Button* rzp = new Fl_Button(700,pty,30,20,"R-Z");
-		rzp->callback((Fl_Callback*)rmzCB,this);
+
+		// move
+		Fl_Button* mxp = new Fl_Button(605, pty, 60, 20, "mX+");
+		mxp->callback((Fl_Callback*)mxpCB,this);
+		Fl_Button* myp = new Fl_Button(670, pty, 60, 20, "mY+");
+		myp->callback((Fl_Callback*)mypCB,this);
+		Fl_Button* mzp = new Fl_Button(735, pty, 60, 20, "mZ+");
+		mzp->callback((Fl_Callback*)mzpCB,this);
+		
+		pty += 25;
+
+		Fl_Button* mxn = new Fl_Button(605, pty, 60, 20, "mX-");
+		mxn->callback((Fl_Callback*)mxnCB,this);
+		Fl_Button* myn = new Fl_Button(670, pty, 60, 20, "mY-");
+		myn->callback((Fl_Callback*)mynCB,this);
+		Fl_Button* mzn = new Fl_Button(735, pty, 60, 20, "mZ-");
+		mzn->callback((Fl_Callback*)mznCB,this);
+		
+		pty += 25;
+
+		// rotate
+		Fl_Button* rxp = new Fl_Button(605, pty, 90, 20, "rX+");
+		rxp->callback((Fl_Callback*)rxpCB,this);
+		Fl_Button* rzp = new Fl_Button(705, pty, 90, 20, "rZ+");
+		rzp->callback((Fl_Callback*)rzpCB,this);
+		
+		pty += 25;
+
+		Fl_Button* rxn = new Fl_Button(605, pty, 90, 20, "rX-");
+		rxn->callback((Fl_Callback*)rxnCB,this);
+		Fl_Button* rzn = new Fl_Button(705, pty, 90, 20, "rZ-");
+		rzn->callback((Fl_Callback*)rznCB,this);
 
 		pty+=30;
 
 		// TODO: add widgets for all of your fancier features here
-#ifdef EXAMPLE_SOLUTION
-		makeExampleWidgets(this,pty);
-#endif
+// #ifdef EXAMPLE_SOLUTION
+// 		makeExampleWidgets(this,pty);
+// #endif
 
 		// we need to make a little phantom widget to have things resize correctly
 		Fl_Box* resizebox = new Fl_Box(600,595,200,5);
@@ -198,19 +225,19 @@ advanceTrain(float dir)
 	//#####################################################################
 	// TODO: make this work for your train
 	//#####################################################################
-#ifdef EXAMPLE_SOLUTION
-	// note - we give a little bit more example code here than normal,
-	// so you can see how this works
+// #ifdef EXAMPLE_SOLUTION
+// 	// note - we give a little bit more example code here than normal,
+// 	// so you can see how this works
 
-	if (arcLength->value()) {
-		float vel = ew.physics->value() ? physicsSpeed(this) : dir * (float)speed->value();
-		world.trainU += arclenVtoV(world.trainU, vel, this);
-	} else {
-		world.trainU +=  dir * ((float)speed->value() * .1f);
-	}
+// 	if (arcLength->value()) {
+// 		float vel = ew.physics->value() ? physicsSpeed(this) : dir * (float)speed->value();
+// 		world.trainU += arclenVtoV(world.trainU, vel, this);
+// 	} else {
+// 		world.trainU +=  dir * ((float)speed->value() * .1f);
+// 	}
 
-	float nct = static_cast<float>(world.points.size());
-	if (world.trainU > nct) world.trainU -= nct;
-	if (world.trainU < 0) world.trainU += nct;
-#endif
+// 	float nct = static_cast<float>(world.points.size());
+// 	if (world.trainU > nct) world.trainU -= nct;
+// 	if (world.trainU < 0) world.trainU += nct;
+// #endif
 }
