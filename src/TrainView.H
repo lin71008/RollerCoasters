@@ -50,6 +50,23 @@ class CTrack;
 
 // this uses the old ArcBall Code
 #include "Utilities/ArcBallCam.H"
+#include "Utilities/Pnt3f.H"
+
+static const int N_dT = 100;
+static const float Track_Height = 1.0;
+static const float Track_Width = 1.0;
+static const float Track_Gauge = 5.0;
+static const float Crosstie_Spacing = 8.0;
+static const float Crosstie_Height = 1.0;
+static const float Crosstie_Width = 1.5;
+static const float Crosstie_Lenght = 10.0;
+static const float Train_Height = 6.0;
+static const float Train_Width = 4.5;
+static const float Train_Length = 7.0;
+static const float Train_Gap = 2.0;
+static const float Train_Weight = 0.01;
+static const float Min_Speed = 0.001;
+static const float Max_Speed = 0.300;
 
 class TrainView : public Fl_Gl_Window
 {
@@ -76,10 +93,18 @@ class TrainView : public Fl_Gl_Window
 		// pick a point (for when the mouse goes down)
 		void doPick();
 
+		void getCurvesPoint(const float t, Pnt3f* pos, Pnt3f* dir, Pnt3f* up);
+
+	private:
+		void drawTrack(bool doingShadows);
+		void drawTrain(bool doingShadows);
+		void drawOthers(bool doingShadows);
+
 	public:
 		ArcBallCam		arcball;			// keep an ArcBall for the UI
 		int				selectedCube;  // simple - just remember which cube is selected
 
 		TrainWindow*	tw;				// The parent of this display window
 		CTrack*			m_pTrack;		// The track of the entire scene
+		unsigned seed;
 };

@@ -65,7 +65,19 @@ void mznCB(Fl_Widget*, TrainWindow* tw);
 void rxpCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about x axis by one less degree
 void rxnCB(Fl_Widget*, TrainWindow* tw);
+// Rotate the selected control point  about y axis by one more degree
+void rypCB(Fl_Widget*, TrainWindow* tw);
+// Rotate the selected control point  about y axis by one less degree
+void rynCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about the z axis one more degree
 void rzpCB(Fl_Widget*, TrainWindow* tw);
 // Rotate the selected control point  about the z axis one less degree
 void rznCB(Fl_Widget*, TrainWindow* tw);
+
+// add one car to train
+void add_trainCB(Fl_Widget*, TrainWindow *tw);
+// remove one car from train
+void sub_trainCB(Fl_Widget*, TrainWindow *tw);
+
+// RNG
+void rngCB(Fl_Widget*, TrainWindow *tw);

@@ -34,6 +34,7 @@
 #include <Fl/Fl_File_Chooser.H>
 #include <Fl/math.h>
 #pragma warning(pop)
+#include <string>
 
 //***************************************************************************
 //
@@ -107,7 +108,7 @@ void deletePointCB(Fl_Widget*, TrainWindow* tw)
 //===========================================================================
 void forwCB(Fl_Widget*, TrainWindow* tw)
 {
-	tw->advanceTrain(2);
+	tw->advanceTrain(1);
 	tw->damageMe();
 }
 //***************************************************************************
@@ -117,7 +118,7 @@ void forwCB(Fl_Widget*, TrainWindow* tw)
 void backCB(Fl_Widget*, TrainWindow* tw)
 //===========================================================================
 {
-	tw->advanceTrain(-2);
+	tw->advanceTrain(-1);
 	tw->damageMe();
 }
 
@@ -342,4 +343,39 @@ void rznCB(Fl_Widget*, TrainWindow* tw)
 //===========================================================================
 {
 	rotz(tw, -10);
+}
+
+static char train_amount_buffer[8] = "";
+
+//***************************************************************************
+// * add one car to train
+//===========================================================================
+void add_trainCB(Fl_Widget*, TrainWindow *tw)
+//===========================================================================
+{
+	if (tw->train_amount < 20) tw->train_amount++;
+	sprintf(train_amount_buffer, "%d", tw->train_amount);
+	tw->trainBox->label(train_amount_buffer);
+	tw->trainBox->redraw_label();
+	tw->damageMe();
+}
+
+//***************************************************************************
+// * remove one car from train
+//===========================================================================
+void sub_trainCB(Fl_Widget*, TrainWindow *tw)
+//===========================================================================
+{
+	if (tw->train_amount > 1) tw->train_amount--;
+	sprintf(train_amount_buffer, "%d", tw->train_amount);
+	tw->trainBox->label(train_amount_buffer);
+	tw->trainBox->redraw_label();
+	tw->damageMe();
+}
+
+// RNG
+void rngCB(Fl_Widget*, TrainWindow *tw)
+{
+	tw->trainView->seed = time(NULL);
+	tw->damageMe();
 }
