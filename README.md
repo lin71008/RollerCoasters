@@ -1,4 +1,4 @@
-# Maze Visibility
+#  Roller Coasters
 
 ## Table of Contents
 
